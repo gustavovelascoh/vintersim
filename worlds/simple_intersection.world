@@ -1,3 +1,6 @@
+include "include/laser_base.inc"
+include "include/lms200.inc"
+
 define floorplan model
 (
 # sombre, sensible, artistic
@@ -17,7 +20,7 @@ laser_return 1
 window
 (
   size [ 600 500 ] # in pixels
-  scale 30   # pixels per meter
+  scale 4   # pixels per meter
   center [ 0  0 ]
   rotate [ 0  0 ]
   			
@@ -27,8 +30,18 @@ window
 # load an environment bitmap
 floorplan
 ( 
-  name "INT1"
-  size [19 18.5 1.0]
+  name "int_1"
+  size [225 125 0.1]
   pose [0 0 0 0]
-  bitmap "simple_int.bmp"
+  bitmap "bitmaps/int_1.bmp"
+)
+
+laser_base
+(
+  pose [8 8 0 180]
+)
+
+laser_base
+(
+  pose [-8 -8 0 0]
 )
