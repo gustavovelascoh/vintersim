@@ -17,15 +17,15 @@ if __name__ == '__main__':
 	rate = rospy.Rate(1.0)
 	
 	while not rospy.is_shutdown():
-		br.sendTransform((1.0, 1.0, 0.1),
-							tf.transformations.quaternion_from_euler(0, 0, math.pi*3/4),
+		br.sendTransform((8.0, 8.0, 0.4),
+							tf.transformations.quaternion_from_euler(0, 0, math.pi),
 #							(0.0, 0.0, 0.0, math.pi*3/4),
 							rospy.Time.now(),
 							#"map",
 							"robot_0/odom",
 							"map")
-		br1.sendTransform((-1.0, 1.0, 0.1),
-							tf.transformations.quaternion_from_euler(0, 0, math.pi/4),
+		br1.sendTransform((-8.0, -8.0, 0.4),
+							tf.transformations.quaternion_from_euler(0, 0, 0),
 #							(math.pi/4, 0.0, 0.0, 0.0),
 							rospy.Time.now(),
 							"robot_1/odom",

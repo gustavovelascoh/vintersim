@@ -1,5 +1,6 @@
 include "include/laser_base.inc"
 include "include/lms200.inc"
+include "include/p3dx.inc"
 
 define floorplan model
 (
@@ -44,4 +45,15 @@ laser_base
 laser_base
 (
   pose [-8 -8 0 0]
+)
+
+p3dx
+(
+	name "car_0"
+	pose [-8 -2 0 0]
+)
+p3dx
+(
+	name "car_1"
+	pose [8 2 0 180]
 )

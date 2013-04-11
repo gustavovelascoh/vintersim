@@ -14,7 +14,7 @@ define laser_base position
 		point[7] [0 0.3]
 		z [0 1]
 	)
-	size [ 0.4 0.4 0.2 ]
+	size [ 0.4 0.4 0.4 ]
 	color_rgba [0.2 0.2 0.2 0.8]
 	lms200
 	(

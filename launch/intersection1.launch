@@ -1,0 +1,5 @@
+<launch>
+	<node name="stageros" pkg="stage" type="stageros" args="$(find vintersim)/worlds/simple_intersection.world"/>
+	<node name="simple_intersection" type="simple-intersection.py" pkg="vintersim"/>
+	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->
+</launch>
