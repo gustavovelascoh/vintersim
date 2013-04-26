@@ -4,7 +4,7 @@ project(vintersim)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs nav_msgs sensor_msgs geometry_msgs tf)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -49,7 +49,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
    INCLUDE_DIRS include
-#  LIBRARIES intersim
+  LIBRARIES ${PROJECT_NAME}/lib64
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
@@ -64,6 +64,10 @@ include_directories(include
   ${catkin_INCLUDE_DIRS}
 )
 
+#link_directories(
+#	${PROJECT_NAME}/lib64/
+#)
+
 ## Declare a cpp library
 # add_library(intersim
 #   src/${PROJECT_NAME}/intersim.cpp
@@ -71,6 +75,18 @@ include_directories(include
 
 ## Declare a cpp executable
 # add_executable(intersim_node src/intersim_node.cpp)
+# add_dependencies(intersim_node intersim_generate_messages_cpp)
+
+add_executable(stageros src/stageros.cpp)
+
+target_link_libraries(stageros
+  ${catkin_LIBRARIES}
+#  ${LD_LIBRARY_PATH}
+#  ~/lib/stage4/libstage/libstage.so
+	~/ros_ws/src/vintersim/lib64/libstage.so
+#	${PROJECT_NAME}/lib64/libstage.so
+#	libstage.so
+)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
