@@ -87,7 +87,7 @@ namespace Stg
   typedef Model* (*creator_t)( World*, Model*, const std::string& type );
   
   /** Initialize the Stage library. Stage will parse the argument
-      array looking for parameters in the conventnioal way. */
+      array looking for parameters in the conventional way. */
   void Init( int* argc, char** argv[] );
 
   /** returns true iff Stg::Init() has been called. */
@@ -240,8 +240,7 @@ namespace Stg
     Size& Load( Worldfile* wf, int section, const char* keyword );
     void Save( Worldfile* wf, int section, const char* keyword ) const;
 	 
-    void Zero()
-    { x=y=z=0.0; }
+    void Zero() { x=y=z=0.0; }
   };
   
   /** Specify a 3 axis position, in x, y and heading. */
@@ -314,9 +313,11 @@ namespace Stg
     }	
 	 
     // a < b iff a is closer to the origin than b
-    bool operator<( const Pose& other ) const
+    bool operator<( const Pose& p ) const
     {
-      return( hypot( y, x ) < hypot( other.y, other.x ));
+	  //return( hypot( y, x ) < hypot( otHer.y, other.x ));
+	 // just compare the squared values to avoid the sqrt()
+      return( (y*y+x*x) < (p.y*p.y + p.x*p.x ));
     }
 	 
     bool operator==( const Pose& other ) const
@@ -333,13 +334,27 @@ namespace Stg
 	       y!=other.y || 
 	       z!=other.z || 
 	       a!=other.a );
-    }
-	 
-    meters_t Distance2D( const Pose& other ) const
-    {
-      return hypot( x-other.x, y-other.y );
-    }
+    }	 
 
+	   meters_t Distance( const Pose& other ) const
+	   {
+	     return hypot( x-other.x, y-other.y );
+	   }
+  };
+  
+
+  class RaytraceResult
+  {
+  public:
+    Pose pose;
+    Model* mod;
+    Color color;
+    meters_t range;
+
+    RaytraceResult() : pose(), mod(NULL), color(), range(0.0) {}
+    RaytraceResult( const Pose& pose, Model* mod, const Color& color, const meters_t range) 
+       : pose(pose), mod(mod), color(color), range(range) {}
+    
   };
   
   
@@ -363,18 +378,18 @@ namespace Stg
     Velocity()
     { /*empty*/ }		 
     
+    
+    Velocity& Load( Worldfile* wf, int section, const char* keyword )
+    {
+       Pose::Load( wf, section, keyword );
+       return *this;
+    }
+    
     /** Print velocity in human-readable format on stdout, with a
 	prefix string 
 	
 	@param prefix Character string to prepend to output, or NULL.
     */
-    
-    Velocity& Load( Worldfile* wf, int section, const char* keyword )
-    {
-      Pose::Load( wf, section, keyword );
-      return *this;
-    }
-    
     virtual void Print( const char* prefix ) const
     {
       if( prefix )
@@ -601,13 +616,8 @@ namespace Stg
     Size size;
   } rotrect_t; // rotated rectangle
   
-  /** load the image file [filename] and convert it to an array of
-      rectangles, filling in the number of rects, width and
-      height. The vector [rects] is populated with rectangles.
-  */
-  int rotrects_from_image_file( const std::string& filename, 
-				std::vector<rotrect_t>& rects );
-  
+  /** load the image file [filename] and convert it to a vector of polygons 
+   */
   int polys_from_image_file( const std::string& filename, 
 			     std::vector<std::vector<point_t> >& polys );
 
@@ -750,23 +760,8 @@ namespace Stg
       return( it == props.end() ? NULL : it->second );
     }
   };
-
-  /** raytrace sample
-   */
-  class RaytraceResult
-  {
-  public:
-    Pose pose; ///< location and direction of the ray origin
-    meters_t range; ///< range to beam hit in meters
-    Model* mod; ///< the model struck by this beam
-    Color color; ///< the color struck by this beam
-	 
-    RaytraceResult() : pose(), range(0), mod(NULL), color() {}
-    RaytraceResult( const Pose& pose, 
-		    meters_t range ) 
-      : pose(pose), range(range), mod(NULL), color() {}	 
-  };
 	
+
   class Ray
   {
   public:
@@ -782,7 +777,7 @@ namespace Stg
     meters_t range;
     ray_test_func_t func;
     const void* arg;
-    bool ztest;		
+    bool ztest;		    
   };
 		
 
@@ -1011,24 +1006,22 @@ namespace Stg
 	 	
     /** trace a ray. */
     RaytraceResult Raytrace( const Ray& ray );
-
+    
     RaytraceResult Raytrace( const Pose& pose, 			 
 			     const meters_t range,
 			     const ray_test_func_t func,
 			     const Model* finder,
 			     const void* arg,
 			     const bool ztest );
-		
-    void Raytrace( const Pose &pose, 			 
+    
+    void Raytrace( const Pose &gpose, // global pose
 		   const meters_t range,
 		   const radians_t fov,
 		   const ray_test_func_t func,
-		   const Model* finder,
+		   const Model* model,			 
 		   const void* arg,
-		   RaytraceResult* samples,
-		   const uint32_t sample_count,
-		   const bool ztest );
-		
+		   const bool ztest,		      
+		   std::vector<RaytraceResult>& results );
 		
     /** Enlarge the bounding volume to include this point */
     inline void Extend( point3_t pt );
@@ -1218,7 +1211,7 @@ namespace Stg
     friend class Canvas;
     friend class Cell;
   public:
-		
+	
     /** Block Constructor. A model's body is a list of these
 	blocks. The point data is copied, so pts can safely be freed
 	after constructing the block.*/
@@ -1275,8 +1268,8 @@ namespace Stg
 		    unsigned int width, unsigned int height,		
 		    meters_t cellwidth, meters_t cellheight );
     
-  private:
     BlockGroup* group; ///< The BlockGroup to which this Block belongs.
+  private:
     std::vector<point_t> pts; ///< points defining a polygon.
     Bounds local_z; ///<  z extent in local coords.
     Bounds global_z; ///< z extent in global coordinates.
@@ -1301,8 +1294,10 @@ namespace Stg
   private:
     std::vector<Block> blocks; ///< Contains the blocks in this group.
     int displaylist; ///< OpenGL displaylist that renders this blockgroup.
-    Model& mod;
 
+  public:    Model& mod;
+
+  private:
     void AppendBlock( const Block& block );
 
     void CalcSize();	 
@@ -1499,7 +1494,7 @@ namespace Stg
     friend class Option;
 
   private:
-
+      
     Canvas* canvas;
     std::vector<Option*> drawOptions;
     FileManager* fileMan; ///< Used to load and save worldfiles
@@ -2108,34 +2103,36 @@ namespace Stg
 			     const meters_t range, 
 			     const ray_test_func_t func,
 			     const void* arg,
-			     const bool ztest = true );
-  
+			     const bool ztest )
+    {
+      return world->Raytrace( LocalToGlobal(pose),
+			      range,
+			      func,
+			      this,
+			      arg,
+			      ztest );
+    }
+    
     /** raytraces multiple rays around the point and heading identified
 	by pose, in local coords */
     void Raytrace( const Pose &pose,
-		   const meters_t range, 
-		   const radians_t fov, 
-		   const ray_test_func_t func,
-		   const void* arg,
-		   RaytraceResult* samples,
-		   const uint32_t sample_count,
-		   const bool ztest = true  );
-  
-    RaytraceResult Raytrace( const radians_t bearing, 			 
-			     const meters_t range,
-			     const ray_test_func_t func,
-			     const void* arg,
-			     const bool ztest = true );
-  
-    void Raytrace( const radians_t bearing, 			 
-		   const meters_t range,
-		   const radians_t fov,
-		   const ray_test_func_t func,
-		   const void* arg,
-		   RaytraceResult* samples,
-		   const uint32_t sample_count,
-		   const bool ztest = true );
-
+     		   const meters_t range, 
+     		   const radians_t fov, 
+     		   const ray_test_func_t func,
+     		   const void* arg,
+     		   const bool ztest,
+		       std::vector<RaytraceResult>& results )
+    {
+      return world->Raytrace( LocalToGlobal(pose),
+			      range,
+			      fov,
+			      func,
+			      this,
+			      arg,
+			      ztest,      
+			      results );
+    }
+      
     virtual void UpdateCharge();
 		
     static int UpdateWrapper( Model* mod, void* arg ){ mod->Update(); return 0; }
@@ -2313,12 +2310,6 @@ namespace Stg
     /** set the pose of model in global coordinates */
     void SetGlobalPose(  const Pose& gpose );
 	
-    /** Enable update of model pose according to velocity state */
-    //    void VelocityEnable();
-
-    /** Disable update of model pose according to velocity state */
-    //void VelocityDisable();
-
     /** set a model's pose in its parent's coordinate system */
     void SetPose(  const Pose& pose );
 	
@@ -2448,13 +2439,6 @@ namespace Stg
 
     static std::map< std::string, creator_t> name_map;	 
 
-    // 		class Neighbors
-    // 		{
-    // 			Model *left, *right, *up, *down;
-    // 		public:
-    // 			Neighbors() : left(NULL), right(NULL), up(NULL), down(NULL) {}
-    // 		} nbors; // instance
-
   protected:
     virtual void Startup();
     virtual void Shutdown();
@@ -2463,8 +2447,6 @@ namespace Stg
 
 
   // BLOBFINDER MODEL --------------------------------------------------------
-
-
   /// %ModelBlobfinder class
   class ModelBlobfinder : public Model
   {
@@ -2744,7 +2726,6 @@ namespace Stg
     ModelRanger( World* world, Model* parent, const std::string& type );
     virtual ~ModelRanger();
 		
-    virtual void Load();
     virtual void Print( char* prefix ) const;
 		
     class Vis : public Visualizer 
@@ -2769,7 +2750,7 @@ namespace Stg
       Bounds range;
       radians_t fov;
       unsigned int sample_count;
-      Color col;
+      Color color;
 			
       std::vector<meters_t> ranges;
       std::vector<double> intensities;
@@ -2780,7 +2761,7 @@ namespace Stg
 		 range( 0.0, 5.0 ),
 		 fov( 0.1 ), 
 		 sample_count(1),
-		 col( 0,1,0,0.3 ),
+		 color( Color(0,0,1,0.15)),
 		 ranges(),
 		 intensities(),
 		 bearings()
@@ -2964,7 +2945,6 @@ namespace Stg
 		   const std::string& type );
     // destructor
     ~ModelPosition();
-
 
     /** Get (a copy of) the model's velocity in its local reference
 	frame. */

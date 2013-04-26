@@ -1,5 +1,6 @@
 /*
- *  stageros
+ *  Vintersim
+ *  Copyright (c) 2013, Gustavo Velasco.
  *  Copyright (c) 2008, Willow Garage, Inc.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -48,7 +49,7 @@
 
 #include "tf/transform_broadcaster.h"
 
-#define USAGE "stageros <worldfile>"
+#define USAGE "vintersim <worldfile>"
 #define ODOM "odom"
 #define BASE_SCAN "base_scan"
 #define BASE_POSE_GROUND_TRUTH "base_pose_ground_truth"
@@ -443,7 +444,7 @@ main(int argc, char** argv)
     exit(-1);
   }
 
-  ros::init(argc, argv, "stageros");
+  ros::init(argc, argv, "vintersim");
 
   bool gui = true;
   for(int i=0;i<(argc-1);i++)

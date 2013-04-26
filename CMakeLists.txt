@@ -62,11 +62,12 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(include
   ${catkin_INCLUDE_DIRS}
+  include/Stage-4.1
 )
 
-#link_directories(
-#	${PROJECT_NAME}/lib64/
-#)
+link_directories(
+	${PROJECT_SOURCE_DIR}/lib64/
+)
 
 ## Declare a cpp library
 # add_library(intersim
@@ -77,15 +78,15 @@ include_directories(include
 # add_executable(intersim_node src/intersim_node.cpp)
 # add_dependencies(intersim_node intersim_generate_messages_cpp)
 
-add_executable(stageros src/stageros.cpp)
+add_executable(vintersim src/vintersim.cpp)
 
-target_link_libraries(stageros
-  ${catkin_LIBRARIES}
+target_link_libraries(vintersim
+	${catkin_LIBRARIES}
 #  ${LD_LIBRARY_PATH}
-#  ~/lib/stage4/libstage/libstage.so
-	~/ros_ws/src/vintersim/lib64/libstage.so
-#	${PROJECT_NAME}/lib64/libstage.so
-#	libstage.so
+# ~/lib/stage4/libstage/libstage.so
+#	~/ros_ws/src/vintersim/lib64/libstage.so
+#	${PROJECT_SRC_DIR}/lib64/libstage.so
+	libstage.so
 )
 
 ## Add cmake target dependencies of the executable/library
