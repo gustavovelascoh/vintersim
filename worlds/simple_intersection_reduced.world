@@ -39,11 +39,13 @@ floorplan
 
 laser_base
 (
+	name "base_0"
   pose [1.6 1.6 0 180]
 )
 
 laser_base
 (
+	name "base_1"
   pose [-1.6 -1.6 0 0]
 )
 

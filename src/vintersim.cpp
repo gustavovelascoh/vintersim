@@ -49,7 +49,7 @@
 
 #include "tf/transform_broadcaster.h"
 
-#define USAGE "vintersim <worldfile>"
+#define USAGE "USAGE \n vintersim <worldfile>"
 #define ODOM "odom"
 #define BASE_SCAN "base_scan"
 #define BASE_POSE_GROUND_TRUTH "base_pose_ground_truth"
@@ -151,18 +151,21 @@ StageNode::mapName_2(const char *name, size_t robotID, Stg::Model* mod)
   if (positionmodels.size() > 1)
   {
     static char buf[100];
-    //static std::map<std::string, void *> model_map = ((Stg::Ancestor *) mod)->props;
+    // Stg::Ancestor* ancestor = (Stg::Ancestor) mod;
     static char name_str[100];
     std::string label = "name";
     
-    /*typedef std::map<std::string, void*>::const_iterator MapIterator;
-		for (MapIterator iter = model_map.begin(); iter != model_map.end(); iter++)
-		{
-			 std::cout << "Key: " << iter->first << std::endl;
-			 //name_str = (std::string) iter->first;
-		}
-    */
-    snprintf(buf, sizeof(buf), "/rrobot_%u%s/%s",(unsigned int)robotID, mod->GetModelType().c_str(), name);
+//    static std::map<std::string, void *> model_map = ((Stg::Ancestor *) mod)->props;
+//
+//    typedef std::map<std::string, void*>::const_iterator MapIterator;
+//	for (MapIterator iter = model_map.begin(); iter != model_map.end(); iter++)
+//	{
+//		 std::cout << "Key: " << iter->first << std::endl;
+//		 //name_str = (std::string) iter->first;
+//	}
+    std::cout << "Token: " << ((Stg::Ancestor *) mod)->Token() << std::endl;
+
+    snprintf(buf, sizeof(buf), "/%s/%s", ((Stg::Ancestor *) mod)->Token(), name);
     return buf;
   }
   else
@@ -212,7 +215,7 @@ StageNode::StageNode(int argc, char** argv, bool gui, const char* fname)
   Stg::Init( &argc, &argv );
 
   if(gui)
-    this->world = new Stg::WorldGui(800, 700, "Stage (ROS)");
+    this->world = new Stg::WorldGui(800, 700, "Vintersim (ROS)");
   else
     this->world = new Stg::World();
 

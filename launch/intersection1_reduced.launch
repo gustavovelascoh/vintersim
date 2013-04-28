@@ -1,6 +1,6 @@
 <launch>
 	<node name="map_server" pkg="map_server" type="map_server" args="$(find vintersim)/maps/simple_int_reduced.yaml"/>
-	<node name="stageros" pkg="stage" type="stageros" args="$(find vintersim)/worlds/simple_intersection_reduced.world"/>
+	<node name="vintersim" pkg="vintersim" type="vintersim" args="$(find vintersim)/worlds/simple_intersection_reduced.world"/>
 	<node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vintersim"/>
 	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->
 </launch>
