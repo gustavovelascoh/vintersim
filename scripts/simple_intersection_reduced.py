@@ -24,10 +24,19 @@ if __name__ == '__main__':
 							#"map",
 							"robot_0/odom",
 							"map")
-		br1.sendTransform((-1.6, -1.6, 0.4),
-							tf.transformations.quaternion_from_euler(0, 0, 0),
-#							(math.pi/4, 0.0, 0.0, 0.0),
+		br.sendTransform((1.6, -1.6, 0.4),
+							tf.transformations.quaternion_from_euler(0, 0, math.pi/2),
 							rospy.Time.now(),
 							"robot_1/odom",
+							"map")
+		br1.sendTransform((-1.6, -1.6, 0.4),
+							tf.transformations.quaternion_from_euler(0, 0, 0),
+							rospy.Time.now(),
+							"robot_2/odom",
+							"map")
+		br.sendTransform((-1.6, 1.6, 0.4),
+							tf.transformations.quaternion_from_euler(0, 0, -math.pi/2),
+							rospy.Time.now(),
+							"robot_3/odom",
 							"map")
 		rate.sleep()
