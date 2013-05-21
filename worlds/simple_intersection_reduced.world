@@ -71,9 +71,9 @@ p3dx
 	pose [0.4 1.6 0 -90]
 	localization_origin [0.4 1.6 0 -90]
 )
-p3dx
-(
-	name "car_1"
-	pose [-0.4 -1.6 0 90]
-	localization_origin [-0.4 -1.6 0 90]
-)
+#p3dx
+#(
+#	name "car_1"
+#	pose [-0.4 -1.6 0 90]
+#	localization_origin [-0.4 -1.6 0 90]
+#)

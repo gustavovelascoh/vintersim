@@ -277,11 +277,14 @@ StageNode::SubscribeModels()
       ROS_ERROR("no position");
       return(-1);
     }
-    laser_pubs_.push_back(n_.advertise<sensor_msgs::LaserScan>(mapName(BASE_SCAN,r), 10));
+//    laser_pubs_.push_back(n_.advertise<sensor_msgs::LaserScan>(mapName(BASE_SCAN,r), 10));
 //    odom_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName(ODOM,r), 10));
-    odom_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName_2(ODOM,r,(Stg::Model *)positionmodels[r]), 10));
+
     ground_truth_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName(BASE_POSE_GROUND_TRUTH,r), 10));
     cmdvel_subs_.push_back(n_.subscribe<geometry_msgs::Twist>(mapName(CMD_VEL,r), 10, boost::bind(&StageNode::cmdvelReceived, this, r, _1)));
+
+    laser_pubs_.push_back(n_.advertise<sensor_msgs::LaserScan>(mapName_2(BASE_SCAN,r,(Stg::Model *)positionmodels[r]), 10));
+    odom_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName_2(ODOM,r,(Stg::Model *)positionmodels[r]), 10));
   }
   clock_pub_ = n_.advertise<rosgraph_msgs::Clock>("/clock",10);
   return(0);
