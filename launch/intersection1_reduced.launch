@@ -2,35 +2,7 @@
 	<node name="map_server" pkg="map_server" type="map_server" args="$(find vintersim)/maps/simple_int_reduced.yaml"/>
 	<node name="vintersim" pkg="vintersim" type="vintersim" args="$(find vintersim)/worlds/simple_intersection_reduced.world"/>
 	
-	<param name="costmap_node/costmap/robot_base_frame" value="intersection_0"/>
-	<param name="costmap_node/costmap/publish_frequency" value="5"/>
-	<param name="costmap_node/costmap/obstacle_range" value="10"/>
-	<param name="costmap_node/costmap/raytrace_range" value="15"/>
-	
-	
-	
-	<param name="costmap_node/costmap/observation_sources" value="baseNE baseSE baseSW baseNW"/>
-	
-	<param name="costmap_node/costmap/baseNE/topic" value="base_0/base_scan" />
-	<param name="costmap_node/costmap/baseNE/data_type" value="LaserScan" />
-	<param name="costmap_node/costmap/baseNE/observation_persistence" value="2" />
-	<param name="costmap_node/costmap/baseNE/obstacle_range" value="10" />
-	<param name="costmap_node/costmap/baseNE/raytrace_range" value="15" />
-	
-	<param name="costmap_node/costmap/baseSE/topic" value="base_1/base_scan" />
-	<param name="costmap_node/costmap/baseSE/data_type" value="LaserScan" />
-	<param name="costmap_node/costmap/baseSE/observation_persistence" value="2" />
-	
-	<param name="costmap_node/costmap/baseSW/topic" value="base_2/base_scan" />
-	<param name="costmap_node/costmap/baseSW/data_type" value="LaserScan" />
-	<param name="costmap_node/costmap/baseSW/observation_persistence" value="2" />
-	
-	<param name="costmap_node/costmap/baseNW/topic" value="base_3/base_scan" />
-	<param name="costmap_node/costmap/baseNW/data_type" value="LaserScan" />
-	<param name="costmap_node/costmap/baseNW/observation_persistence" value="2" />
-	
-	<param name="costmap_node/costmap/static_map" value="true"/>
-	
+	<include file="$(find vintersim)/launch/costmap_params.launch"/>	
 	
 	<node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vintersim"/>
 	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->
