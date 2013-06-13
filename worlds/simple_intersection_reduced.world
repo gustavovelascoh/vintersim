@@ -17,11 +17,16 @@ define floorplan model
 	laser_return 1
 )
 
+# set the resolution of the underlying raytrace model in meters
+resolution 0.02
+
+interval_sim 20  # simulation timestep in milliseconds
+
 # configure the GUI window
 window
 (
-  size [ 600 500 ] # in pixels
-  scale 20   # pixels per meter
+  size [ 540 450 ] # in pixels
+  scale 30   # pixels per meter
   center [ 0  0 ]
   rotate [ 0  0 ]
   			
