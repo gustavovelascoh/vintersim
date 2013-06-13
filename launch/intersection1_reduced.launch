@@ -5,5 +5,7 @@
 	<include file="$(find vintersim)/launch/costmap_params.launch"/>	
 	
 	<node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vintersim"/>
+	
+	<!--  node name="costmap_2d_node" type="costmap_2d_node" pkg="costmap_2d"/>-->
 	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->
 </launch>
