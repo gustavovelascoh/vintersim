@@ -34,7 +34,6 @@
 #include <unistd.h>
 #include <signal.h>
 
-
 // libstage
 #include <stage.hh>
 
@@ -279,12 +278,13 @@ StageNode::SubscribeModels()
     }
 //    laser_pubs_.push_back(n_.advertise<sensor_msgs::LaserScan>(mapName(BASE_SCAN,r), 10));
 //    odom_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName(ODOM,r), 10));
-
-    ground_truth_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName(BASE_POSE_GROUND_TRUTH,r), 10));
-    cmdvel_subs_.push_back(n_.subscribe<geometry_msgs::Twist>(mapName(CMD_VEL,r), 10, boost::bind(&StageNode::cmdvelReceived, this, r, _1)));
+//    ground_truth_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName(BASE_POSE_GROUND_TRUTH,r), 10));
+//    cmdvel_subs_.push_back(n_.subscribe<geometry_msgs::Twist>(mapName(CMD_VEL,r), 10, boost::bind(&StageNode::cmdvelReceived, this, r, _1)));
 
     laser_pubs_.push_back(n_.advertise<sensor_msgs::LaserScan>(mapName_2(BASE_SCAN,r,(Stg::Model *)positionmodels[r]), 10));
     odom_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName_2(ODOM,r,(Stg::Model *)positionmodels[r]), 10));
+    ground_truth_pubs_.push_back(n_.advertise<nav_msgs::Odometry>(mapName_2(BASE_POSE_GROUND_TRUTH,r,(Stg::Model *)positionmodels[r]), 10));
+    cmdvel_subs_.push_back(n_.subscribe<geometry_msgs::Twist>(mapName_2(CMD_VEL,r,(Stg::Model *)positionmodels[r]), 10, boost::bind(&StageNode::cmdvelReceived, this, r, _1)));
   }
   clock_pub_ = n_.advertise<rosgraph_msgs::Clock>("/clock",10);
   return(0);
@@ -354,7 +354,9 @@ StageNode::WorldCallback()
 					this->laserMsgs[r].intensities[i] = (uint8_t)s.intensities[i];
 				}
 			
-      this->laserMsgs[r].header.frame_id = mapName("base_laser_link", r);
+      //this->laserMsgs[r].header.frame_id = mapName("base_laser_link", r);
+      this->laserMsgs[r].header.frame_id = mapName_2("base_laser_link", r,(Stg::Model *)positionmodels[r]);
+
       this->laserMsgs[r].header.stamp = sim_time;
       this->laser_pubs_[r].publish(this->laserMsgs[r]);
 			}
@@ -367,16 +369,21 @@ StageNode::WorldCallback()
     tf::Transform txLaser =  tf::Transform(laserQ,
                                             tf::Point(lp.x, lp.y, 0.15));
     tf.sendTransform(tf::StampedTransform(txLaser, sim_time,
-                                          mapName("base_link", r),
-                                          mapName("base_laser_link", r)));
+    										mapName_2("base_link", r,(Stg::Model *)positionmodels[r]),
+    		                                mapName_2("base_laser_link", r,(Stg::Model *)positionmodels[r])));
+                                          //mapName("base_link", r),
+                                          //mapName("base_laser_link", r)));
+
 
     // Send the identity transform between base_footprint and base_link
     tf::Transform txIdentity(tf::createIdentityQuaternion(),
                              tf::Point(0, 0, 0));
     tf.sendTransform(tf::StampedTransform(txIdentity,
                                           sim_time,
-                                          mapName("base_footprint", r),
-                                          mapName("base_link", r)));
+                                          mapName_2("base_footprint", r,(Stg::Model *)positionmodels[r]),
+                                          mapName_2("base_link", r,(Stg::Model *)positionmodels[r])));
+                                          //mapName("base_footprint", r),
+                                          //mapName("base_link", r)));
 
     // Get latest odometry data
     // Translate into ROS message format and publish
@@ -391,7 +398,9 @@ StageNode::WorldCallback()
     //@todo Publish stall on a separate topic when one becomes available
     //this->odomMsgs[r].stall = this->positionmodels[r]->Stall();
     //
-    this->odomMsgs[r].header.frame_id = mapName("odom", r);
+    //this->odomMsgs[r].header.frame_id = mapName("odom", r);
+    this->odomMsgs[r].header.frame_id = mapName_2("odom", r,(Stg::Model *)positionmodels[r]);
+
     this->odomMsgs[r].header.stamp = sim_time;
 
     this->odom_pubs_[r].publish(this->odomMsgs[r]);
@@ -403,8 +412,10 @@ StageNode::WorldCallback()
                          tf::Point(odomMsgs[r].pose.pose.position.x,
                                    odomMsgs[r].pose.pose.position.y, 0.0));
     tf.sendTransform(tf::StampedTransform(txOdom, sim_time,
-                                          mapName("odom", r),
-                                          mapName("base_footprint", r)));
+    									mapName_2("odom", r,(Stg::Model *)positionmodels[r]),
+    									mapName_2("base_footprint", r,(Stg::Model *)positionmodels[r])));
+                                          //mapName("odom", r),
+                                          //mapName("base_footprint", r)));
 
     // Also publish the ground truth pose and velocity
     Stg::Pose gpose = this->positionmodels[r]->GetGlobalPose();
@@ -431,7 +442,9 @@ StageNode::WorldCallback()
     //this->groundTruthMsgs[r].twist.twist.linear.y = gvel.y;
     this->groundTruthMsgs[r].twist.twist.angular.z = gvel.a;
 
-    this->groundTruthMsgs[r].header.frame_id = mapName("odom", r);
+
+    this->groundTruthMsgs[r].header.frame_id = mapName_2("odom", r,(Stg::Model *)positionmodels[r]);
+    //this->groundTruthMsgs[r].header.frame_id = mapName("odom", r);
     this->groundTruthMsgs[r].header.stamp = sim_time;
 
     this->ground_truth_pubs_[r].publish(this->groundTruthMsgs[r]);

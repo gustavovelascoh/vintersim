@@ -41,22 +41,22 @@ if __name__ == '__main__':
 			br0.sendTransform((1.6, 1.6, 0.4),
 								tf.transformations.quaternion_from_euler(0, 0, math.pi),
 								rospy.Time.now(),
-								"robot_0/odom",
+								"base_0/odom",
 								"intersection_0")
 			br1.sendTransform((1.6, -1.6, 0.4),
 								tf.transformations.quaternion_from_euler(0, 0, math.pi/2),
 								rospy.Time.now(),
-								"robot_1/odom",
+								"base_1/odom",
 								"intersection_0")
 			br2.sendTransform((-1.6, -1.6, 0.4),
 								tf.transformations.quaternion_from_euler(0, 0, 0),
 								rospy.Time.now(),
-								"robot_2/odom",
+								"base_2/odom",
 								"intersection_0")
 			br3.sendTransform((-1.6, 1.6, 0.4),
 								tf.transformations.quaternion_from_euler(0, 0, -math.pi/2),
 								rospy.Time.now(),
-								"robot_3/odom",
+								"base_3/odom",
 								"intersection_0")
 			br4.sendTransform((0, 0, 0),
 								tf.transformations.quaternion_from_euler(0, 0, 0),
