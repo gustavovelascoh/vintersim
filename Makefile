@@ -15,5 +15,4 @@ only_build:
 	
 clean: 
 	rm -rf build/stage
-	rm cmake_*
 	
