@@ -3,7 +3,7 @@ GIT_URL = git://github.com/rtv/Stage.git
 
 default: clean
 	mkdir -p $(GIT_DIR)
-	cd $(GIT_DIR) &&	touch in_builds && git clone $(GIT_URL)
+	cd $(GIT_DIR) && git clone $(GIT_URL)
 	make only_build
 
 only_build:	
