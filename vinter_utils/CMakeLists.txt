@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(vintersim)
+project(vinter_utils)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs nav_msgs sensor_msgs geometry_msgs tf message_generation)
+find_package(catkin REQUIRED COMPONENTS vinter_msgs)
+find_package(vinter_sim)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -12,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs nav_msgs sensor_ms
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
-## See http://ros.org/doc/groovy/api/catkin/html/user_guide/setup_dot_py.html
+## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 # catkin_python_setup()
 
 #######################################
@@ -27,31 +28,31 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs nav_msgs sensor_ms
 # )
 
 ## Generate services in the 'srv' folder
- add_service_files(
-   FILES
+# add_service_files(
+#   FILES
 #   Service1.srv
 #   Service2.srv
-	WanderCtrl.srv
- )
+# )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs
- )
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs  # Or other packages containing msgs
+# )
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 ## The catkin_package macro generates cmake config files for your package
 ## Declare things to be passed to dependent projects
+## INCLUDE_DIRS: uncomment this if you package contains header files
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-   INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME}/lib64
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+#  INCLUDE_DIRS include
+#  LIBRARIES vinter_utils
+#  CATKIN_DEPENDS vinter_msgs/ vinter_sim
 #  DEPENDS system_lib
 )
 
@@ -61,41 +62,25 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include
+# include_directories(include)
+include_directories(
   ${catkin_INCLUDE_DIRS}
-  include/Stage-4.1
-)
-
-link_directories(
-	${PROJECT_SOURCE_DIR}/lib64/
 )
 
 ## Declare a cpp library
-# add_library(intersim
-#   src/${PROJECT_NAME}/intersim.cpp
+# add_library(vinter_utils
+#   src/${PROJECT_NAME}/vinter_utils.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(intersim_node src/intersim_node.cpp)
-# add_dependencies(intersim_node intersim_generate_messages_cpp)
-
-add_executable(vintersim src/vintersim.cpp)
-
-target_link_libraries(vintersim
-	${catkin_LIBRARIES}
-#  ${LD_LIBRARY_PATH}
-# ~/lib/stage4/libstage/libstage.so
-#	~/ros_ws/src/vintersim/lib64/libstage.so
-#	${PROJECT_SRC_DIR}/lib64/libstage.so
-	libstage.so
-)
+# add_executable(vinter_utils_node src/vinter_utils_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(intersim_node intersim_generate_messages_cpp)
+# add_dependencies(vinter_utils_node vinter_utils_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(intersim_node
+# target_link_libraries(vinter_utils_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -104,7 +89,7 @@ target_link_libraries(vintersim
 #############
 
 # all install targets should use catkin DESTINATION variables
-# See http://ros.org/doc/groovy/api/catkin/html/adv_user_guide/variables.html
+# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
@@ -114,7 +99,7 @@ target_link_libraries(vintersim
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS intersim intersim_node
+# install(TARGETS vinter_utils vinter_utils_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -139,7 +124,7 @@ target_link_libraries(vintersim
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_intersim.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_vinter_utils.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
