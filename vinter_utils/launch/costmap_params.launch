@@ -1,0 +1,48 @@
+<launch>
+	<param name="costmap_node/costmap/robot_base_frame" value="intersection_0"/>
+	<param name="costmap_node/costmap/update_frequency" value="10"/>
+	<param name="costmap_node/costmap/publish_frequency" value="10"/>
+	<param name="costmap_node/costmap/obstacle_range" value="10"/>
+	<param name="costmap_node/costmap/raytrace_range" value="15"/>
+	
+	<param name="costmap_node/costmap/inflation_radius" value="0.05"/>
+	<param name="costmap_node/costmap/robot_radius" value="0.03"/>	
+	
+	<param name="costmap_node/costmap/observation_sources" value="baseNE baseSW baseSE baseNW"/>
+	
+	<!-- North East Base laser -->
+	<param name="costmap_node/costmap/baseNE/topic" value="base_0/base_scan" />
+	<param name="costmap_node/costmap/baseNE/data_type" value="LaserScan" />
+	<param name="costmap_node/costmap/baseNE/observation_persistence" value="0.0" />
+	<param name="costmap_node/costmap/baseNE/obstacle_range" value="10" />
+	<param name="costmap_node/costmap/baseNE/raytrace_range" value="15" />
+	<param name="costmap_node/costmap/baseNE/clearing" value="true" />
+	
+	<!-- South East Base laser -->
+	<param name="costmap_node/costmap/baseSE/topic" value="base_1/base_scan" />
+	<param name="costmap_node/costmap/baseSE/data_type" value="LaserScan" />
+	<param name="costmap_node/costmap/baseSE/observation_persistence" value="0.0" />
+	<param name="costmap_node/costmap/baseSE/obstacle_range" value="10" />
+	<param name="costmap_node/costmap/baseSE/raytrace_range" value="15" />
+	<param name="costmap_node/costmap/baseSE/clearing" value="true" />
+	
+	<!-- South West Base laser -->
+	<param name="costmap_node/costmap/baseSW/topic" value="base_2/base_scan" />
+	<param name="costmap_node/costmap/baseSW/data_type" value="LaserScan" />
+	<param name="costmap_node/costmap/baseSW/observation_persistence" value="0.0" />
+	<param name="costmap_node/costmap/baseSW/obstacle_range" value="10" />
+	<param name="costmap_node/costmap/baseSW/raytrace_range" value="15" />
+	<param name="costmap_node/costmap/baseSW/clearing" value="true" />
+	
+	<!-- North West Base laser -->
+	<param name="costmap_node/costmap/baseNW/topic" value="base_3/base_scan" />
+	<param name="costmap_node/costmap/baseNW/data_type" value="LaserScan" />
+	<param name="costmap_node/costmap/baseNW/observation_persistence" value="0.0" />
+	<param name="costmap_node/costmap/baseNW/obstacle_range" value="10" />
+	<param name="costmap_node/costmap/baseNW/raytrace_range" value="15" />
+	<param name="costmap_node/costmap/baseNW/clearing" value="true" />
+	
+	<!-- param name="costmap_node/costmap/static_map" value="true"/> -->
+	<param name="costmap_node/costmap/publish_voxel_map" value="true"/>
+	<param name="costmap_node/costmap/track_unknown_space" value="true"/>
+</launch>

@@ -1,0 +1,2 @@
+string intersection_id
+IntersectionStatus status
