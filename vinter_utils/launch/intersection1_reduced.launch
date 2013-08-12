@@ -1,10 +1,10 @@
 <launch>
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find vintersim)/maps/simple_int_reduced.yaml"/>
-	<node name="vintersim" pkg="vintersim" type="vintersim" args="$(find vintersim)/worlds/simple_intersection_reduced.world"/>
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find vinter_utils)/maps/simple_int_reduced.yaml"/>
+	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(find vinter_utils)/world/simple_intersection_reduced.world"/>
 	
-	<include file="$(find vintersim)/launch/costmap_params.launch"/>	
+	<include file="$(find vinter_utils)/launch/costmap_params.launch"/>	
 	
-	<node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vintersim"/>
+	<node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vinter_control"/>
 	
 	<!--  node name="costmap_2d_node" type="costmap_2d_node" pkg="costmap_2d"/>-->
 	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->

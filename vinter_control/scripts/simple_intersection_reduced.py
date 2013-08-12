@@ -11,7 +11,7 @@ import tf
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Pose2D, PoseArray
 from tf import transformations
-from its_msgs.msg import Location
+from vinter_msgs.msg import Location
 
 global my_int
 

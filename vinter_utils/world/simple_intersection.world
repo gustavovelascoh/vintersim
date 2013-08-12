@@ -1,0 +1,61 @@
+include "include/laser_base.inc"
+include "include/lms200.inc"
+include "include/p3dx.inc"
+
+define floorplan model
+(
+# sombre, sensible, artistic
+color "gray30"
+# most maps will need a bounding box
+boundary 1
+gui_nose 0
+gui_grid 0
+gui_move 0
+gui_outline 0
+gripper_return 0
+fiducial_return 0
+laser_return 1
+)
+
+# configure the GUI window
+window
+(
+  size [ 600 500 ] # in pixels
+  scale 4   # pixels per meter
+  center [ 0  0 ]
+  rotate [ 0  0 ]
+  			
+  show_data 1              # 1=on 0=off
+)
+
+# load an environment bitmap
+floorplan
+( 
+  name "int_1"
+  size [225 125 0.1]
+  pose [0 0 0 0]
+  bitmap "bitmaps/int_1.bmp"
+)
+
+laser_base
+(
+	name "base_0"
+  pose [8 8 0 180]
+)
+
+laser_base
+(
+	name "base_0"
+  pose [-8 -8 0 0]
+)
+
+p3dx
+(
+	name "car_0"
+	pose [-8 -2 0 0]
+)
+p3dx
+(
+	name "car_1"
+	pose [8 2 0 180]
+)
