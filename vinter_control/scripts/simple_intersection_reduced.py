@@ -63,7 +63,8 @@ if __name__ == '__main__':
 	my_int = intersection = Intersection()
 	my_int.set_type('crossroad')
 	
-	laser_list_str = rospy.get_param('laser_base_list', '')
+    
+	laser_list_str = rospy.get_param('laser_base_list', 'base_0 base_1 base_2 base_3')
 	laser_ns = laser_list_str.split(' ')
 	rospy.loginfo('laser_list = %s' % laser_list_str)
 	
