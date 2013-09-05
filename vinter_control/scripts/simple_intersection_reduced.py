@@ -60,14 +60,16 @@ def update_laser(data,src):
 if __name__ == '__main__':
 	rospy.init_node('simple_intersection')
 	
-	my_int = intersection = Intersection()
+	my_int = Intersection()
 	my_int.set_type('crossroad')
 	
-    
+    #Get laser names
 	laser_list_str = rospy.get_param('laser_base_list', 'base_0 base_1 base_2 base_3')
+    #Array of laser names
 	laser_ns = laser_list_str.split(' ')
 	rospy.loginfo('laser_list = %s' % laser_list_str)
 	
+    #Create LaserBase objects accordingly to laser names
 	l0 = LaserBase()
 	l0.ns = laser_ns[0]
 	l0.subscriber = rospy.Subscriber(l0.ns + '/base_pose_ground_truth',Odometry,update_laser,0)
@@ -87,13 +89,18 @@ if __name__ == '__main__':
 	l3.ns = laser_ns[3]
 	l3.subscriber = rospy.Subscriber(l3.ns + '/base_pose_ground_truth',Odometry,update_laser,3)
 	my_int.laser_array.append(l3)
-		
+	
+    
+    # Create transform broadcasters, one for each LaserBase and another for intersection itself.	
 	br0 = tf.TransformBroadcaster()
 	br1 = tf.TransformBroadcaster()
 	br2 = tf.TransformBroadcaster()
 	br3 = tf.TransformBroadcaster()
 	br4 = tf.TransformBroadcaster()
+    
+    # Rate = 5 Hz
 	rate = rospy.Rate(5)
+    # 1 sec Delay
 	rospy.sleep(1)
 	#my_int.set_location()
 	
