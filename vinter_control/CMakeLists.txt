@@ -73,10 +73,12 @@ include_directories(
 
 ## Declare a cpp executable
 # add_executable(vinter_control_node src/vinter_control_node.cpp)
-add_executable(laser_station src/laser_station.cpp)
-target_link_libraries(laser_station
-	${catkin_LIBRARIES}
-)
+
+#
+#add_executable(laser_station src/laser_station.cpp)
+#target_link_libraries(laser_station
+	#${catkin_LIBRARIES}
+#)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
