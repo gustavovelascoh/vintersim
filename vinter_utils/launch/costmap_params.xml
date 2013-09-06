@@ -42,7 +42,7 @@
 	<param name="base_3/raytrace_range" value="15" />
 	<param name="base_3/clearing" value="true" />
 	
-	<!-- param name="static_map" value="true"/> -->
+	<param name="static_map" value="true"/>
 	<param name="publish_voxel_map" value="true"/>
 	<param name="track_unknown_space" value="true"/>
 </launch>
