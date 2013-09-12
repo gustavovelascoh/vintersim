@@ -1,6 +1,16 @@
 Vintersim project
 =================
-
+* Version 0.4.1 - 2013-09-10:
+----------------
+Include:
+	vinter_control 	0.1.0 
+	vinter_msgs		0.1.0
+	vinter_sim		0.2.0
+	vinter_utils	0.2.1
+Changes:
+	vinter_utils:
+		+ Added /use_sim_time param to allow launching costmap_2d node		
+------------------------------------------------
 * Version 0.4.0 - 2013-09-05:
 ----------------
 Include:
@@ -14,4 +24,3 @@ Changes:
 		+ Added launch option without stage GUI
 		i Use of atributte "ns" when including costmap_params file
 		c Renamed costmap_params.launch to costmap_params.xml
-	
