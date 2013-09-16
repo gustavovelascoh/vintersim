@@ -1,6 +1,9 @@
 <launch>
 	<param name="use_sim_time" value="true"/>
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find vinter_utils)/maps/simple_int_reduced.yaml"/>
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find vinter_utils)/maps/simple_int_reduced.yaml">
+		<remap from="/map" to="/intersection/map" />
+		<remap from="/map" to="/intersection/map_metadata" />
+	</node>
 	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(find vinter_utils)/world/simple_intersection_reduced.world"/>
 	
 	<include file="$(find vinter_utils)/launch/costmap_params.xml" ns="costmap_node/costmap" />	
