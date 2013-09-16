@@ -8,7 +8,7 @@ import tf
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Pose2D, PoseArray
 from tf import transformations
-from its_msgs.msg import Location
+from vinter_msgs.msg import Location
 # services
 from std_srvs.srv import *
 
@@ -17,9 +17,15 @@ class LaserBase():
         self.subscribers = []
         self.laser_odoms = [{} for i in range(4)]
         self.Location = Location()
-        self.ns = rospy.get_param('laserbase_name', 'base0')
+        self.Pose = Pose2D()
+        
+        self.pose_configured = 0
+        self.laser_rcvd = [0 for i in range(4)]
+        
+        self.ns = rospy.get_param('/intersection/laser_array', 'laserbase0')
         rospy.Service('get_odoms',Empty,self.get_odoms)
-        rospy.init_node('laser_base_controller')
+        rospy.Service('get_location',Empty,self.get_location)
+        rospy.init_node('laser_array_controller')
         
         try:
             
@@ -33,8 +39,9 @@ class LaserBase():
             rospy.loginfo('EXCEPTION!!')
     
     def getLaserNames(self):
-        laser_names_str = rospy.get_param('laser_names_list')
+        laser_names_str = rospy.get_param('laser_names_list','base_0 base_1 base_2 base_3')
         self.laser_names = laser_names_str.split(' ')
+        rospy.loginfo("Laser names: %s" % self.laser_names)
     
     def subscribe(self):
         for i in range(0,len(self.laser_names)):
@@ -44,14 +51,37 @@ class LaserBase():
         #rospy.loginfo("item # %d, len = %d" % (item,len(self.laser_odoms)))
         self.laser_odoms[item] = data
         
+        if self.pose_configured is 0:
+            self.laser_rcvd[item] = 1
+            rospy.loginfo("laser_rcvd = %d", item)
+        
+            if sum(self.laser_rcvd) == 4:
+                x = []
+                y = []
+                        
+                for i in range(len(self.laser_odoms)):            
+                    x.append(self.laser_odoms[i].pose.pose.position.x)
+                    y.append(self.laser_odoms[i].pose.pose.position.y)
+                
+                self.Pose.x = sum(x)/4.0
+                self.Pose.y = sum(y)/4.0
+                
+                self.pose_configured = 1
+        
+        
 
-    def get_location():
-        pass
+    def get_location(self, req):
+        rospy.loginfo("my Pose ")
+        rospy.loginfo(self.Pose)        
+    
     
     def get_odoms(self, req):
+
         for i in range(len(self.laser_odoms)):
             rospy.loginfo("Odom %d:", i)
-            rospy.loginfo(self.laser_odoms[i])
+            rospy.loginfo(self.laser_odoms[i].pose.pose)
+            x.append(self.laser_odoms[i].pose.pose.position.x)
+            y.append(self.laser_odoms[i].pose.pose.position.y)
         
             
 if __name__ == '__main__':
