@@ -93,10 +93,10 @@ if __name__ == '__main__':
     
     # Create transform broadcasters, one for each LaserBase and another for intersection itself.	
 	br0 = tf.TransformBroadcaster()
-	br1 = tf.TransformBroadcaster()
-	br2 = tf.TransformBroadcaster()
-	br3 = tf.TransformBroadcaster()
-	br4 = tf.TransformBroadcaster()
+	#br1 = tf.TransformBroadcaster()
+	#br2 = tf.TransformBroadcaster()
+	#br3 = tf.TransformBroadcaster()
+	#br4 = tf.TransformBroadcaster()
     
     # Rate = 5 Hz
 	rate = rospy.Rate(5)
@@ -115,22 +115,22 @@ if __name__ == '__main__':
 								rospy.Time.now(),
 								"base_0/odom",
 								"intersection_0")
-			br1.sendTransform((1.6, -1.6, 0.4),
+			br0.sendTransform((1.6, -1.6, 0.4),
 								tf.transformations.quaternion_from_euler(0, 0, math.pi/2),
 								rospy.Time.now(),
 								"base_1/odom",
 								"intersection_0")
-			br2.sendTransform((-1.6, -1.6, 0.4),
+			br0.sendTransform((-1.6, -1.6, 0.4),
 								tf.transformations.quaternion_from_euler(0, 0, 0),
 								rospy.Time.now(),
 								"base_2/odom",
 								"intersection_0")
-			br3.sendTransform((-1.6, 1.6, 0.4),
+			br0.sendTransform((-1.6, 1.6, 0.4),
 								tf.transformations.quaternion_from_euler(0, 0, -math.pi/2),
 								rospy.Time.now(),
 								"base_3/odom",
 								"intersection_0")
-			br4.sendTransform((0, 0, 0),
+			br0.sendTransform((0, 0, 0),
 								tf.transformations.quaternion_from_euler(0, 0, 0),
 								rospy.Time.now(),
 								"intersection_0",
