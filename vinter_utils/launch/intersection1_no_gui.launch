@@ -9,7 +9,8 @@
 	
 	<include file="$(find vinter_utils)/launch/costmap_params.xml" ns="costmap_node/costmap" />	
 	
-	<node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vinter_control"/>
+	<!--node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vinter_control"/-->
+	<node name="laser_array_controller" type="laser_array_controller.py" pkg="vinter_control"/>
 	
 	<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d">
 		<remap from="/map" to="/intersection/map"/>
