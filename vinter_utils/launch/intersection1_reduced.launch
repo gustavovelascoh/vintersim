@@ -15,5 +15,14 @@
 	<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d">
 		<remap from="/map" to="/intersection/map"/>
 	</node>
+	
+	<!-- BEGIN CAR0 -->
+	<group ns="car_0">
+		<node pkg="fake_localization" type="fake_localization" name="fake_localization" respawn="false" output="screen">
+	      <param name="odom_frame_id" value="car_0/odom" />
+	      <param name="base_frame_id" value="car_0/base_link" />
+	    </node>
+	</group>
+	<!-- END CAR0 -->
 	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->
 </launch>
