@@ -14,10 +14,12 @@ from std_srvs.srv import *
 
 class LaserBase():
     def __init__(self):
+        self.name = "intersection_0"
         self.subscribers = []
         self.laser_odoms = [{} for i in range(4)]
         self.Location = Location()
         self.Pose = Pose2D()
+        self.tf_broadcaster = tf.TransformBroadcaster()
         
         self.pose_configured = 0
         self.laser_rcvd = [0 for i in range(4)]
@@ -27,13 +29,39 @@ class LaserBase():
         rospy.Service('get_location',Empty,self.get_location)
         rospy.init_node('laser_array_controller')
         
+        rate = rospy.Rate(20)
+        
         try:
             
             self.getLaserNames()
             self.subscribe()
                 
             while not rospy.is_shutdown():
-                rospy.sleep(1.0)
+                
+                if self.pose_configured == 1:
+                    
+                    for i in range(len(self.laser_odoms)):
+                        x = self.laser_odoms[i].pose.pose.position.x
+                        y = self.laser_odoms[i].pose.pose.position.y
+                        z = self.laser_odoms[i].pose.pose.position.z
+                        qx = self.laser_odoms[i].pose.pose.orientation.x
+                        qy = self.laser_odoms[i].pose.pose.orientation.y
+                        qz = self.laser_odoms[i].pose.pose.orientation.z
+                        qw = self.laser_odoms[i].pose.pose.orientation.w
+                        
+                        self.tf_broadcaster.sendTransform((x,y,z),
+                                                          (qx,qy,qz,qw),
+                                                          rospy.Time.now(),
+                                                          self.laser_names[i] + "/odom",
+                                                          self.name)
+                    
+                    self.tf_broadcaster.sendTransform((0, 0, 0),
+                                tf.transformations.quaternion_from_euler(0, 0, 0),
+                                rospy.Time.now(),
+                                self.name,
+                                "map")
+                        
+                rate.sleep()
         
         except rospy.ROSInterruptException:
             rospy.loginfo('EXCEPTION!!')
@@ -79,9 +107,7 @@ class LaserBase():
 
         for i in range(len(self.laser_odoms)):
             rospy.loginfo("Odom %d:", i)
-            rospy.loginfo(self.laser_odoms[i].pose.pose)
-            x.append(self.laser_odoms[i].pose.pose.position.x)
-            y.append(self.laser_odoms[i].pose.pose.position.y)
+            rospy.loginfo(self.laser_odoms[i].pose.pose)            
         
             
 if __name__ == '__main__':

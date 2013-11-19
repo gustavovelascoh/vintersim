@@ -99,7 +99,7 @@ if __name__ == '__main__':
 	#br4 = tf.TransformBroadcaster()
     
     # Rate = 5 Hz
-	rate = rospy.Rate(5)
+	rate = rospy.Rate(10)
     # 1 sec Delay
 	rospy.sleep(1)
 	#my_int.set_location()
