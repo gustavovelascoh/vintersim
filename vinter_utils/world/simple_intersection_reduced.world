@@ -30,7 +30,7 @@ window
   center [ 0  0 ]
   rotate [ 0  0 ]
   			
-  show_data 0              # 1=on 0=off
+  show_data 1              # 1=on 0=off
 )
 
 # load an environment bitmap
@@ -49,24 +49,28 @@ laser_base
 (
 	name "base_0"		# NE base points W
 	pose [1.6 1.6 0 180]
+	size [ 0.4 0.4 0.1 ]
 )
 
 laser_base
 (
 	name "base_1"		# SE base points N
 	pose [1.6 -1.6 0 90]
+	size [ 0.4 0.4 0.2 ]
 )
 
 laser_base
 (
 	name "base_2"		# SW base points E
 	pose [-1.6 -1.6 0 0]
+	size [ 0.4 0.4 0.3 ]
 )
 
 laser_base
 (
 	name "base_3"		# NW base points S
 	pose [-1.6 1.6 0 -90]
+	size [ 0.4 0.4 0.4 ]
 )
 
 # define vehicles:
@@ -76,9 +80,25 @@ p3dx
 	pose [0.4 1.6 0 -90]
 	localization_origin [0.4 1.6 0 -90]
 )
-#p3dx
-#(
-#	name "car_1"
-#	pose [-0.4 -1.6 0 90]
-#	localization_origin [-0.4 -1.6 0 90]
-#)
+
+p3dx
+(
+	name "car_1"
+	pose [-0.4 -1.6 0 90]
+	localization_origin [-0.4 -1.6 0 90]
+)
+
+p3dx
+(
+	name "car_2"
+	pose [-1.6 -0.4 0 0]
+	localization_origin [-0.4 -1.6 0 90]
+)
+
+p3dx
+(
+	name "car_3"
+	pose [-3.2 -0.4 0 0]
+	localization_origin [-0.4 -1.6 0 90]
+)
+

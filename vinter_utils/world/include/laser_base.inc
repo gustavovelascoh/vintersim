@@ -20,4 +20,5 @@ define laser_base position
 	(
 		pose [0 0 0 0]
 	)
+	laser_return 1
 )
