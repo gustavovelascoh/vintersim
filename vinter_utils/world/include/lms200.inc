@@ -2,7 +2,10 @@ define lms200 ranger
 (
 	sensor
 	(
-		range [0.0 30.0]
+		# real range
+		#range [0.0 30.0]
+		# scaled range (real /5)
+		range [0.0 6.0]
 		fov 180
 		samples 361
 	)
@@ -19,4 +22,5 @@ define lms200 ranger
 	color_rgba [ 0 0 1 0.9 ]
 	size [ 0.25 0.25 0.25 ]
 	pose [0.0 0.0 0.0 0.0]
+	laser_return 1
 )
