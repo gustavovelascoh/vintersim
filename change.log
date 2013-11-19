@@ -1,5 +1,21 @@
 Vintersim project
 =================
+* Version 0.5.0 - 2013-11-19:
+----------------
+Include:
+	vinter_control 	0.2.0 
+	vinter_msgs		0.1.0
+	vinter_sim		0.2.0
+	vinter_utils	0.3.0
+Changes:
+	vinter_control:
+		c Renamed node 'laser_base_controller' to 'laser_array_controller'
+		c 'Simple_intersection_reduced' node replaced by 'laser_array_controller'
+	vinter_utils:
+		+ Stage configured to always show data
+		+ Three more robots added to world file
+		+ Costmaps remaped to intersection namespace		
+------------------------------------------------
 * Version 0.4.1 - 2013-09-10:
 ----------------
 Include:
