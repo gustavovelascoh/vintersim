@@ -18,6 +18,18 @@
 	
 	<!-- BEGIN CAR0 -->
 	<group ns="car_0">
+		<param name="tf_prefix" value="car_0" />
+		
+		<node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
+			<remap from="map" to="/intersection/map" />
+			
+			<rosparam file="$(find vinter_utils)/move_base_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      		<rosparam file="$(find vinter_utils)/move_base_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      		<rosparam file="$(find vinter_utils)/move_base_config/local_costmap_params.yaml" command="load" />
+      		<rosparam file="$(find vinter_utils)/move_base_config/global_costmap_params.yaml" command="load" />
+			<rosparam file="$(find vinter_utils)/move_base_config/base_local_planner_params.yaml" command="load" />
+		</node>
+		
 		<node pkg="fake_localization" type="fake_localization" name="fake_localization" respawn="false" output="screen">
 	      <param name="odom_frame_id" value="car_0/odom" />
 	      <param name="base_frame_id" value="car_0/base_link" />
