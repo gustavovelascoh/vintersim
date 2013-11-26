@@ -29,7 +29,7 @@ class LaserBase():
         rospy.Service('get_location',Empty,self.get_location)
         rospy.init_node('laser_array_controller')
         
-        rate = rospy.Rate(20)
+        rate = rospy.Rate(60)
         
         try:
             
