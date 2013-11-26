@@ -1,6 +1,7 @@
 include "include/laser_base.inc"
 include "include/lms200.inc"
 include "include/p3dx.inc"
+include "include/building.inc"
 
 define floorplan model
 (
@@ -30,7 +31,7 @@ window
   center [ 0  0 ]
   rotate [ 0  0 ]
   			
-  show_data 1              # 1=on 0=off
+  show_data 0              # 1=on 0=off
 )
 
 # load an environment bitmap
@@ -41,7 +42,21 @@ floorplan
   pose [0 0 0 0]
   bitmap "bitmaps/int_1.bmp"
 )
+# random ""buildings"
+building_8
+(
+	pose [2.5 2.5 0 0] 
+)
 
+building_8
+(
+	pose [-2 4 0 0] 
+)
+
+building_8
+(
+	pose [-2 -3 0 0] 
+)
 
 # Defining laser base stations
 
