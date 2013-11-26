@@ -1,9 +1,44 @@
 #Independent settings for the global planner's costmap. Detailed descriptions of these parameters can be found at http://www.ros.org/wiki/costmap_2d
 
 global_costmap:
+  observation_sources: "base_0 base_1 base_2"
+  base_0: {
+    topic: /base_0/base_scan,
+    data_type: LaserScan, 
+    expected_update_rate: 0.4,
+    observation_persistence: 0.0, 
+    marking: true, 
+    clearing: true, 
+    max_obstacle_height: 0.4, 
+    min_obstacle_height: 0.08
+    }
+  
+  base_1: {
+    topic: /base_1/base_scan,
+    data_type: LaserScan, 
+    expected_update_rate: 0.4,
+    observation_persistence: 0.0, 
+    marking: true, 
+    clearing: true, 
+    max_obstacle_height: 0.4, 
+    min_obstacle_height: 0.08
+    }
+    
+  base_2: {
+    topic: /base_2/base_scan,
+    data_type: LaserScan, 
+    expected_update_rate: 0.4,
+    observation_persistence: 0.0, 
+    marking: true, 
+    clearing: true, 
+    max_obstacle_height: 0.4, 
+    min_obstacle_height: 0.08
+    }
+  #inflation_radius: 0.05
+  #cost_scaling_factor: 10.0
   #Set the global and robot frames for the costmap
   global_frame: /map
-  robot_base_frame: /intersection_0
+  robot_base_frame: base_link
 
   #Set the update and publish frequency of the costmap
   update_frequency: 5.0
