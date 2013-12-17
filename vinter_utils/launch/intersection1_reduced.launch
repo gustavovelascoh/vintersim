@@ -5,7 +5,7 @@
 		<remap from="/map" to="/intersection/map" />
 		<remap from="/map_metadata" to="/intersection/map_metadata" />
 	</node>
-	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(find vinter_utils)/world/simple_intersection_reduced.world"/>
+	<!--node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(find vinter_utils)/world/simple_intersection_reduced.world"/-->
 	
 	<include file="$(find vinter_utils)/launch/costmap_params.xml" ns="costmap_node/costmap" />	
 	
