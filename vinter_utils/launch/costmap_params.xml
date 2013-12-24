@@ -1,6 +1,6 @@
 <launch>
 	<param name="robot_base_frame" value="intersection_0"/>
-	<param name="update_frequency" value="5.0"/>
+	<param name="update_frequency" value="0.0"/>
 	<param name="publish_frequency" value="0.0"/>
 	<param name="obstacle_range" value="10"/>
 	<param name="raytrace_range" value="15"/>
