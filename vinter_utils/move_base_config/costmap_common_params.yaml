@@ -20,7 +20,7 @@ raytrace_range: 3.0
 
 #The footprint of the robot and associated padding
 # included in both global and local costmaps params
-footprint: [[-0.2, -0.2], [-0.2, 0.2], [0.2, 0.2], [0.3, 0.0], [0.2, -0.2]]
+footprint: [[-0.25, -0.25], [-0.25, 0.25], [0.25, 0.25], [0.3, 0.0], [0.25, -0.25]]
 footprint_padding: 0.01
 
 #Cost function parameters

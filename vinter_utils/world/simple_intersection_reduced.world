@@ -43,7 +43,7 @@ floorplan
   pose [0 0 0 0]
   bitmap "bitmaps/int_1.bmp"
 )
-# random ""buildings"
+# random "buildings"
 building_8
 (
 	pose [2.5 2.5 0 0] 
