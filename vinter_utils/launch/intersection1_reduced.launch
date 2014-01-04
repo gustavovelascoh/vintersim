@@ -37,5 +37,6 @@
 	    </node>
 	</group>
 	<!-- END CAR0 -->
-	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->
+	
+	<node name="rviz" pkg="rviz" type="rviz" args="$(find vinter_utils)/int1.rviz"/>
 </launch>
