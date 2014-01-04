@@ -30,6 +30,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs vinter_msgs nav_ms
  add_service_files(
    FILES
 	Char.srv
+	GoalList.srv
 )
 
 ## Generate added messages and services with any dependencies listed here
