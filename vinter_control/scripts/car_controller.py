@@ -5,7 +5,7 @@ import math
 import random
 # message imports
 from tf import transformations
-from move_base_msgs.msg import MoveBaseActionGoal
+from move_base_msgs.msg import MoveBaseActionGoal, MoveBaseActionResult
 from geometry_msgs.msg import Point, Pose, Pose2D, PoseArray, Quaternion
 from vinter_control.srv import *
 
@@ -17,6 +17,7 @@ class CarController():
         self.init_vars()
         self.goal_pub = rospy.Publisher('/car_0/move_base/goal',MoveBaseActionGoal)
         self.publish = 0
+        self.subscriber = rospy.Subscriber('/car_0/move_base/result',MoveBaseActionResult,self.ResultListener)
         rospy.Service('/car_0/set_goal',Char,self.set_goal)
         rospy.Service('/car_0/set_goal_list',GoalList,self.set_goal_list)        
         
@@ -27,6 +28,21 @@ class CarController():
             while not rospy.is_shutdown():
                 if self.publish == 1:
                     self.goal_pub.publish(self.next_goal)
+                    self.publish = 0
+                elif self.publish == 2:
+                    
+                    while self.goals_done < len(self.goal_list) and self.cancel_list == 0:
+                        goal_str = self.goal_list[self.curr_goal]
+                        self.goal_pub.publish(self.goals[goal_str])
+                        while self.goals_done == self.curr_goal:
+                            rate.sleep()
+                        self.curr_goal = self.curr_goal + 1
+                    
+                    if self.cancel_list == 1:
+                        rospy.loginfo("Goal list aborted")
+                    else:    
+                        rospy.loginfo("%d goals Reached" % self.goals_done)
+                    
                     self.publish = 0
             
                 rate.sleep()
@@ -52,8 +68,23 @@ class CarController():
             else:
                 ri = random.randint(0,1)
                 ng = self.next_s[ind][ri]        
+        
+        self.publish = 2
+        self.goals_done = 0
+        self.curr_goal = 0
                      
         return self.goal_list
+    
+    def ResultListener(self,data):
+        result = data.status.status
+        rospy.loginfo("Result = %d," % result)
+        
+        if result == 3:
+            self.goals_done = self.goals_done + 1
+        if result == 4:
+            self.cancel_list = 1;
+        
+        rospy.loginfo("Goals Done = %d," % self.goals_done)
      
     def set_goal(self,req):
         
@@ -67,6 +98,9 @@ class CarController():
         
     def init_vars(self):
         rospy.loginfo('Generating goals...')
+        self.goals_done = 0
+        self.curr_goal = 0
+        self.cancel_list = 0
         self.goals = {}
         self.goals_next = {}
         I = 0.4
@@ -88,12 +122,13 @@ class CarController():
                 -PI/2,PI/2,PI,0,PI/2,-PI/2,0,PI,-PI/2,0,
                 -PI/2,PI,-PI/2,PI,PI/2,PI,PI/2,0,PI/2,0]
         self.next_s = (['Ce','Ds'],['L'],['F'],['Aw','Ds'],['Aw','Bn'],['H'],['J'],
-                  ['Bn','Ce'],['As','L'],['N'],['Bw','F'],['Q'],['CnChar','H'],['T'],
+                  ['Bn','Ce'],['As','L'],['N'],['Bw','F'],['Q'],['Cn','H'],['T'],
                   ['De','J'],['W'],['E'],['O'],['P'],['G'],['R'],
                   ['S'],['I'],['U'],['V'],['K'],['X'],['M'])
         cnt = 0
         for i in self.keys:
             self.goals[i] = MoveBaseActionGoal()
+            self.goals[i].goal_id.id = i
             self.goals[i].goal.target_pose.header.frame_id = 'map'
             self.goals[i].goal.target_pose.pose.position.x = x_s[cnt]
             self.goals[i].goal.target_pose.pose.position.y = y_s[cnt]
