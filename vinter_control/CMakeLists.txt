@@ -27,17 +27,17 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs vinter_msgs nav_ms
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+ add_service_files(
+   FILES
+	Char.srv
+	GoalList.srv
+)
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs#   vinter_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs#   vinter_msgs
+ )
 
 ###################################
 ## catkin specific configuration ##

@@ -1,5 +1,4 @@
 <launch>
-	<node name="stageros" pkg="stage" type="stageros" args="$(find vintersim)/worlds/simple_intersection.world"/>
-	<node name="simple_intersection" type="simple-intersection.py" pkg="vintersim"/>
-	<!--<node name="rviz" pkg="rviz" type="rviz"/>-->
+	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(find vinter_utils)/world/simple_intersection_reduced.world"/>
+	<include file="$(find vinter_utils)/launch/intersection1_reduced.launch" />
 </launch>
