@@ -13,6 +13,6 @@ define building_8 model
 		point[7] [0 0.3]
 		z [0 1]
 	)
-	size [ 1 1 3 ]
+	size [ 4 4 3 ]
 	color_rgba [0.2 1 0.2 0.5]	
 )

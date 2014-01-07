@@ -46,17 +46,22 @@ floorplan
 # random "buildings"
 building_8
 (
-	pose [2.5 2.5 0 0] 
+	pose [5 5 0 0] 
 )
 
 building_8
 (
-	pose [-2 4 0 0] 
+	pose [-4 8 0 0] 
 )
 
 building_8
 (
-	pose [-2 -3 0 0] 
+	pose [-4 -6 0 0] 
+)
+
+building_8
+(
+	pose [8 -8 0 0] 
 )
 
 # Defining laser base stations
