@@ -15,11 +15,11 @@ class CarController():
         
         rospy.loginfo('Starting car_controller node!!')
         self.init_vars()
-        self.goal_pub = rospy.Publisher('/car_0/move_base/goal',MoveBaseActionGoal)
+        self.goal_pub = rospy.Publisher('move_base/goal',MoveBaseActionGoal)
         self.publish = 0
-        self.subscriber = rospy.Subscriber('/car_0/move_base/result',MoveBaseActionResult,self.ResultListener)
-        rospy.Service('/car_0/set_goal',Char,self.set_goal)
-        rospy.Service('/car_0/set_goal_list',GoalList,self.set_goal_list)        
+        self.subscriber = rospy.Subscriber('move_base/result',MoveBaseActionResult,self.ResultListener)
+        rospy.Service('set_goal',Char,self.set_goal)
+        rospy.Service('set_goal_list',GoalList,self.set_goal_list)        
         
         rate = rospy.Rate(10)
         
@@ -115,8 +115,10 @@ class CarController():
         self.goals_next = {}
         I = 0.4
         Q = 1.6
-        H = 11.5
-        W = 21.5
+        #H = 11.5
+        H = rospy.get_param('/intersection/dimensions/height')
+        #W = 21.5
+        W = rospy.get_param('/intersection/dimensions/width')
         PI = math.pi        
         
         self.keys = ['As','Aw','Bn','Bw','Cn','Ce','Ds','De',
@@ -128,7 +130,7 @@ class CarController():
         y_s = [I,I,I,I,-I,-I,-I,-I,
                Q,Q,I,-I,-Q,-Q,-I,I,H,H,
                H,I,-I,-H,-H,-H,-H,-I,I,H]
-        th_s = [-PI/2,PI,PI/2,PI,PI/2,0,PI/2,0,
+        th_s = [-PI/2,PI,PI/2,PI,PI/2,0,-PI/2,0,
                 -PI/2,PI/2,PI,0,PI/2,-PI/2,0,PI,-PI/2,0,
                 -PI/2,PI,-PI/2,PI,PI/2,PI,PI/2,0,PI/2,0]
         self.next_s = (['Ce','Ds'],['L'],['F'],['Aw','Ds'],['Aw','Bn'],['H'],['J'],
