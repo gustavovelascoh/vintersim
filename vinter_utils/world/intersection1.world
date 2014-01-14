@@ -1,0 +1,125 @@
+include "include/laser_base.inc"
+include "include/lms200.inc"
+include "include/p3dx.inc"
+include "include/building.inc"
+
+define floorplan model
+(
+	# sombre, sensible, artistic
+	color "gray30"
+	# most maps will need a bounding box
+	boundary 1
+	gui_nose 0
+	gui_grid 0
+	gui_move 0
+	gui_outline 0
+	gripper_return 0
+	fiducial_return 0
+	laser_return 1
+)
+
+# set the resolution of the underlying raytrace model in meters
+resolution 0.02
+
+interval_sim 100  # simulation timestep in milliseconds
+
+# configure the GUI window
+window
+(
+  size [ 540 450 ] # in pixels
+  scale 30   # pixels per meter
+  center [ 0  0 ]
+  rotate [ 0  0 ]
+  			
+  show_data 0              # 1=on 0=off
+  show_clock 1
+)
+
+# load an environment bitmap
+floorplan
+( 
+  name "int_1"
+  size [45 25 0.1]
+  pose [0 0 0 0]
+  bitmap "bitmaps/int1.bmp"
+)
+# random "buildings"
+building_8
+(
+	pose [5 5 0 0] 
+)
+
+building_8
+(
+	pose [-4 8 0 0] 
+)
+
+building_8
+(
+	pose [-4 -6 0 0] 
+)
+
+building_8
+(
+	pose [8 -8 0 0] 
+)
+
+# Defining laser base stations
+
+laser_base
+(
+	name "base_0"		# NE base points W
+	pose [1.6 1.6 0 180]
+	size [ 0.4 0.4 0.1 ]
+)
+
+laser_base
+(
+	name "base_1"		# SE base points N
+	pose [1.6 -1.6 0 90]
+	size [ 0.4 0.4 0.2 ]
+)
+
+laser_base
+(
+	name "base_2"		# SW base points E
+	pose [-1.6 -1.6 0 0]
+	size [ 0.4 0.4 0.3 ]
+)
+
+laser_base
+(
+	name "base_3"		# NW base points S
+	pose [-1.6 1.6 0 -90]
+	size [ 0.4 0.4 0.4 ]
+)
+
+# define vehicles:
+p3dx
+(
+	name "car_0"
+	pose [-0.4 1.6 0 -90]
+	localization_origin [0.4 1.6 0 -90]
+)
+
+#p3dx
+#(
+#	name "car_1"
+#	pose [0.4 -1.6 0 90]
+#	localization_origin [-0.4 -1.6 0 90]
+#)
+
+#p3dx
+#(
+#	name "car_2"
+#	pose [-1.6 -0.4 0 0]
+#	localization_origin [-0.4 -1.6 0 90]
+#)
+
+#p3dx
+#(
+#	name "car_3"
+#	pose [-5.2 -0.4 0 0]
+#	localization_origin [-0.4 -1.6 0 90]
+#)
+

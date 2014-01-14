@@ -39,9 +39,9 @@ window
 floorplan
 ( 
   name "int_1"
-  size [45 25 0.1]
+  size [25 25 0.1]
   pose [0 0 0 0]
-  bitmap "bitmaps/int_1.bmp"
+  bitmap "bitmaps/int1_sq.bmp"
 )
 # random "buildings"
 building_8
