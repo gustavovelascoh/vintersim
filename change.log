@@ -1,5 +1,24 @@
 Vintersim project
 =================
+* Version 0.6.0 - 2014-01-13:
+----------------
+Include:
+	vinter_control 	0.3.0 
+	vinter_msgs		0.1.0
+	vinter_sim		0.2.0
+	vinter_utils	0.4.0
+Changes:
+	vinter_control:
+		+ Created script 'car_controller', a node for controlling goals of a car. 
+		+ Created services 'Char' and 'GoalList' for setting goal in intersection.
+		c Modified publishing rate of tfs in 'laser_array_controller' node.
+	vinter_utils:
+		+ Included move_base node in launch file for setting goals to the cars
+		+ Created a building.inc model for populate not-road space in simulated world
+		+ Created rviz file
+		c Modified params of costmap. Not established yet.
+		c Merge gui and no-gui options common commands in a single launch file
+------------------------------------------------
 * Version 0.5.0 - 2013-11-19:
 ----------------
 Include:
