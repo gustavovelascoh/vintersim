@@ -102,24 +102,24 @@ p3dx
 	localization_origin [0.4 1.6 0 -90]
 )
 
-p3dx
-(
-	name "car_1"
-	pose [0.4 -1.6 0 90]
-	localization_origin [-0.4 -1.6 0 90]
-)
+#p3dx
+#(
+#	name "car_1"
+#	pose [0.4 -1.6 0 90]
+#	localization_origin [-0.4 -1.6 0 90]
+#)
 
-p3dx
-(
-	name "car_2"
-	pose [-1.6 -0.4 0 0]
-	localization_origin [-0.4 -1.6 0 90]
-)
+#p3dx
+#(
+#	name "car_2"
+#	pose [-1.6 -0.4 0 0]
+#	localization_origin [-0.4 -1.6 0 90]
+#)
 
-p3dx
-(
-	name "car_3"
-	pose [-5.2 -0.4 0 0]
-	localization_origin [-0.4 -1.6 0 90]
-)
+#p3dx
+#(
+#	name "car_3"
+#	pose [-5.2 -0.4 0 0]
+#	localization_origin [-0.4 -1.6 0 90]
+#)
 
