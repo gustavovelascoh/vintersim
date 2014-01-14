@@ -1,0 +1,4 @@
+string first_goal
+int8 length
+---
+string[] goal_list
