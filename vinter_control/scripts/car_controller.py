@@ -30,18 +30,21 @@ class CarController():
                     self.goal_pub.publish(self.next_goal)
                     self.publish = 0
                 elif self.publish == 2:
-                    
+                    rospy.loginfo("Starting execution of list of goals: %s" % (self.goals_done < len(self.goal_list) and self.cancel_list == 0))
                     while self.goals_done < len(self.goal_list) and self.cancel_list == 0:
+                        rospy.loginfo("Setting goal %d of %d" % (self.curr_goal+1,len(self.goal_list)))
                         goal_str = self.goal_list[self.curr_goal]
-                        self.goal_pub.publish(self.goals[goal_str])
+                        #self.goal_pub.publish(self.goals[goal_str])
+                        self.PublishGoal(goal_str)
                         while self.goals_done == self.curr_goal:
                             rate.sleep()
                         self.curr_goal = self.curr_goal + 1
+                        rospy.loginfo("Reached goal %d of %d" % (self.goals_done,len(self.goal_list)))
                     
                     if self.cancel_list == 1:
                         rospy.loginfo("Goal list aborted")
                     else:    
-                        rospy.loginfo("%d goals Reached" % self.goals_done)
+                        rospy.loginfo("%d goals completed" % self.goals_done)
                     
                     self.publish = 0
             
@@ -74,6 +77,13 @@ class CarController():
         self.curr_goal = 0
                      
         return self.goal_list
+    
+    def PublishGoal(self,goal_str):
+        self.goals[goal_str].goal_id.id = goal_str + ("%d" % rospy.Time.now().secs)
+        self.goals[goal_str].goal_id.stamp = rospy.Time.now()
+        self.goal_pub.publish(self.goals[goal_str])
+        return
+        
     
     def ResultListener(self,data):
         result = data.status.status
