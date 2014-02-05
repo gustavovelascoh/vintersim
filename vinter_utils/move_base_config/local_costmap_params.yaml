@@ -3,7 +3,8 @@
 local_costmap:
   observation_sources: base_scan
   base_scan: {
-    topic: base_scan,
+    topic: /car_0/base_scan,
+    sensor_frame: /car_0/base_laser_link,
     data_type: LaserScan, 
     expected_update_rate: 0.4,
     observation_persistence: 0.0, 
@@ -12,6 +13,7 @@ local_costmap:
     max_obstacle_height: 0.4, 
     min_obstacle_height: 0.08
     }
+
   #The footprint of the robot and associated padding
   #footprint: [[-0.2, -0.2], [-0.2, 0.2], [0.2, 0.2], [0.3, 0.0], [0.2, -0.2]]
   #footprint_padding: 0.01
@@ -22,8 +24,8 @@ local_costmap:
   publish_voxel_map: true
 
   #Set the global and robot frames for the costmap
-  global_frame: odom
-  robot_base_frame: base_link
+  global_frame: /car_0/odom
+  robot_base_frame: /car_0/base_link
 
   #Set the update and publish frequency of the costmap
   update_frequency: 5.0
@@ -33,8 +35,8 @@ local_costmap:
   #centered at the robot
   static_map: false
   rolling_window: true
-  width: 8.0
-  height: 8.0
+  width: 10.0
+  height: 10.0
   resolution: 0.025
   origin_x: 0.0
   origin_y: 0.0
