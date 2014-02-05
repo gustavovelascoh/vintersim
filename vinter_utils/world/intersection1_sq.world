@@ -44,53 +44,57 @@ floorplan
   bitmap "bitmaps/int1_sq.bmp"
 )
 # random "buildings"
-building_8
+building_block
 (
-	pose [5 5 0 0] 
+	pose [6 6 0 0]
+	size [9.5 9.5 3] 
 )
 
-building_8
+building_block
 (
-	pose [-4 8 0 0] 
+	pose [-6 6 0 0]
+	size [9.5 9.5 3]  
 )
 
-building_8
+building_block
 (
-	pose [-4 -6 0 0] 
+	pose [-6 -6 0 0]
+	size [9.5 9.5 3] 
 )
 
-building_8
+building_block
 (
-	pose [8 -8 0 0] 
+	pose [6 -6 0 0]
+	size [9.5 9.5 3] 
 )
 
 # Defining laser base stations
 
 laser_base
 (
-	name "base_0"		# NE base points W
-	pose [1.6 1.6 0 180]
+	name "base_0"		# NE base points S
+	pose [1.6 1.6 0 -90]
 	size [ 0.4 0.4 0.1 ]
 )
 
 laser_base
 (
-	name "base_1"		# SE base points N
-	pose [1.6 -1.6 0 90]
+	name "base_1"		# SE base points W
+	pose [1.6 -1.6 0 180]
 	size [ 0.4 0.4 0.2 ]
 )
 
 laser_base
 (
-	name "base_2"		# SW base points E
-	pose [-1.6 -1.6 0 0]
+	name "base_2"		# SW base points N
+	pose [-1.6 -1.6 0 90]
 	size [ 0.4 0.4 0.3 ]
 )
 
 laser_base
 (
-	name "base_3"		# NW base points S
-	pose [-1.6 1.6 0 -90]
+	name "base_3"		# NW base points E
+	pose [-1.6 1.6 0 0]
 	size [ 0.4 0.4 0.4 ]
 )
 
