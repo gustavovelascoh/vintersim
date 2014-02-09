@@ -12,23 +12,23 @@
 		<node name="map_server" pkg="map_server" type="map_server" args="$(arg INT_PARAMS)">
 			<remap from="/map" to="/intersection/map" />
 			<remap from="/map_metadata" to="/intersection/map_metadata" />
+		</node>		
+		<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d" output="screen">
+			<rosparam file="$(find vinter_utils)/launch/costmap_params.yaml" command="load" ns="costmap"/>
+			<remap from="/map" to="/intersection/map"/>
 		</node>
 	</group>
-	
-	<rosparam file="$(find vinter_utils)/launch/costmap_params.yaml" command="load" ns="costmap_node/costmap"/>	
-	<!--include file="$(find vinter_utils)/launch/costmap_params.xml" ns="costmap_node/costmap" /-->	
-	
-	<!--node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vinter_control"/-->
 	<node name="laser_array_controller" type="laser_array_controller.py" pkg="vinter_control"/>
-	
-	<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d">
-		<remap from="/map" to="/intersection/map"/>
-	</node>
-	
 	
 	<!-- BEGIN CAR0 -->
 	<group ns="car_0">
 		<param name="tf_prefix" value="car_0" />
+		
+		<!-- rosparam file="$(find vinter_utils)/launch/costmap_params_rw.yaml" command="load" ns="costmap_node/costmap"/>
+		<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d" output="screen">
+			<remap from="/map" to="/intersection/map"/>
+			<remap from="/" to="/car_0/"/>
+		</node-->
 		
 		<node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
 			<remap from="map" to="/intersection/map" />
