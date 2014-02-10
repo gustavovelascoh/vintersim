@@ -1,4 +1,8 @@
 <launch>
-	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(find vinter_utils)/world/simple_intersection_reduced.world"/>
-	<include file="$(find vinter_utils)/launch/intersection1_reduced.launch" />
+	<arg name="GUI_OPT" default=""/>
+	<!--node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(arg GUI_OPT) $(find vinter_utils)/world/intersection1.world"/-->
+	<include file="$(find vinter_utils)/launch/intersection1_sq.launch">
+		<arg name="INT_PARAMS" value="$(find vinter_utils)/launch/int_params/int1_params.yaml" />
+		<arg name="SIM_ARGS" value="$(arg GUI_OPT) $(find vinter_utils)/world/intersection1.world"/>
+	</include>
 </launch>

@@ -1,0 +1,5 @@
+<launch>	
+	<include file="$(find vinter_utils)/launch/intersection1_sq.launch">
+		<arg name="GUI_OPT" value="-g"/>
+	</include>	
+</launch>

@@ -1,4 +1,5 @@
-<launch>
-	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="-g $(find vinter_utils)/world/simple_intersection_reduced.world"/>
-	<include file="$(find vinter_utils)/launch/intersection1_reduced.launch" />
+<launch>	
+	<include file="$(find vinter_utils)/launch/intersection1.launch">
+		<arg name="GUI_OPT" value="-g"/>
+	</include>	
 </launch>

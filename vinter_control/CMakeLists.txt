@@ -73,7 +73,10 @@ include_directories(
 
 ## Declare a cpp executable
 # add_executable(vinter_control_node src/vinter_control_node.cpp)
-
+add_executable(og2im_node src/og2im.cpp)
+target_link_libraries(og2im_node
+	${catkin_LIBRARIES}
+)
 #
 #add_executable(laser_station src/laser_station.cpp)
 #target_link_libraries(laser_station

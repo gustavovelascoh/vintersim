@@ -4,32 +4,36 @@
 	<arg name="SIM_ARGS" default="$(arg GUI_OPT) $(find vinter_utils)/world/intersection1_sq.world"/>
 	
 	<param name="use_sim_time" value="true"/>
+	
+	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(arg SIM_ARGS)"/>
+	<!-- INTERSECTION NAMESPACE -->
 	<group ns="intersection">
 		<rosparam file="$(arg INT_PARAMS)" command="load" />
 		<node name="map_server" pkg="map_server" type="map_server" args="$(arg INT_PARAMS)">
 			<remap from="/map" to="/intersection/map" />
 			<remap from="/map_metadata" to="/intersection/map_metadata" />
 		</node>
+		<!-- rosparam file="$(find vinter_utils)/launch/costmap_params.yaml" command="load" ns="costmap_node/costmap"/-->		
+		<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d" output="screen">
+			<rosparam file="$(find vinter_utils)/launch/costmap_params.yaml" command="load" ns="costmap"/>
+			<remap from="/map" to="/intersection/map"/>
+		</node>
 	</group>
-	<node name="vinter_sim" pkg="vinter_sim" type="vinter_sim" args="$(arg SIM_ARGS)"/>
-	
-	<include file="$(find vinter_utils)/launch/costmap_params.xml" ns="costmap_node/costmap" />	
-	
-	<!--node name="simple_intersection_reduced" type="simple_intersection_reduced.py" pkg="vinter_control"/-->
 	<node name="laser_array_controller" type="laser_array_controller.py" pkg="vinter_control"/>
-	
-	<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d" output="screen">
-		<remap from="/map" to="/intersection/map"/>
-	</node>
-	
-	
+	<!-- END INTERSECTION NAMESPACE -->
 	<!-- BEGIN CAR0 -->
 	<group ns="car_0">
 		<param name="tf_prefix" value="car_0" />
 		
+		<!-- rosparam file="$(find vinter_utils)/launch/costmap_params_rw.yaml" command="load" ns="costmap_node/costmap"/>
+		<node name="costmap_node" type="costmap_2d_node" pkg="costmap_2d" output="screen">
+			<remap from="/map" to="/intersection/map"/>
+			<remap from="/" to="/car_0/"/>
+		</node-->
+		
 		<node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
 			<remap from="map" to="/intersection/map" />
-			<remap from="odom" to="base_pose_ground_truth" />
+			<!--remap from="odom" to="base_pose_ground_truth" /-->
 			
 			<rosparam file="$(find vinter_utils)/move_base_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
       		<rosparam file="$(find vinter_utils)/move_base_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
@@ -39,8 +43,9 @@
 		</node>
 		
 		<node pkg="fake_localization" type="fake_localization" name="fake_localization" respawn="false" output="screen">
-	      <param name="odom_frame_id" value="car_0/odom" />
-	      <param name="base_frame_id" value="car_0/base_link" />
+	      <param name="odom_frame_id" value="/car_0/odom" />
+	      <param name="base_frame_id" value="/car_0/base_link" />
+	      <!--param name="global_frame_id" value="/car_0/map"></param-->
 	    </node>
 	    
 	    <node pkg="vinter_control" type="car_controller.py" name="car_controller" output="screen">
@@ -49,5 +54,5 @@
 	</group>
 	<!-- END CAR0 -->
 	
-	<node name="rviz" pkg="rviz" type="rviz" args="$(find vinter_utils)/int1.rviz"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find vinter_utils)/int1.rviz"/>
 </launch>
