@@ -1,5 +1,21 @@
 Vintersim project
 =================
+* Version 0.6.0 - 2014-02-10:
+----------------
+Include:
+	vinter_control 	0.4.0 
+	vinter_msgs		0.1.0
+	vinter_sim		0.2.0
+	vinter_utils	0.5.0
+Changes:
+	vinter_control:
+		+ New 'og2im' node for converting nav_msgs/OccupancyGrid to sensor_msgs/Image msg
+		c Removed absolute names in 'car_controller' node. Now it can run under custom car namespace		
+	vinter_utils:
+		+ New square intersection world
+		+ Added params file for Rolling Window Costmap
+		c Costmap_params moved from .xml to .yaml
+------------------------------------------------
 * Version 0.6.0 - 2014-01-13:
 ----------------
 Include:

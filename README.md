@@ -15,7 +15,12 @@ This repo contains 4 packages used for intersection managment:
 
 ##Using##
 
-1. execute in a terminal `roslaunch vinter_utils intersection1_reduced.launch`
-2. In another terminal run `rosrun costmap_2d costmap_2d_node`
-3. For visualization use `rosrun rviz rviz`
+Intersection scenarios: There are 2 intersection, one rectangular and one squared. Both can be launched with or without gui using one of these options:
+
+`roslaunch vinter_utils intersection.launch`
+`roslaunch vinter_utils intersection_no_gui.launch`
+`roslaunch vinter_utils intersection_sq.launch`
+`roslaunch vinter_utils intersection_sq_no_gui.launch`
+
+
 
