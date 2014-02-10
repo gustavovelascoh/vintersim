@@ -20,12 +20,13 @@ raytrace_range: 3.0
 
 #The footprint of the robot and associated padding
 # included in both global and local costmaps params
+#footprint: [[-0.25, -0.25], [-0.25, 0.25], [0.25, 0.25], [0.3, 0.0], [0.25, -0.25]]
 footprint: [[-0.25, -0.25], [-0.25, 0.25], [0.25, 0.25], [0.3, 0.0], [0.25, -0.25]]
-footprint_padding: 0.01
+footprint_padding: 0.1
 
 #Cost function parameters
 # included in both global and local costmaps params
-inflation_radius: 0.25
+inflation_radius: 0.35
 cost_scaling_factor: 10.0
 
 #The cost at which a cell is considered an obstacle when a map is read from the map_server
@@ -36,3 +37,4 @@ lethal_cost_threshold: 100
 #observation_sources: base_scan
 #base_scan: {data_type: LaserScan, expected_update_rate: 0.4,
 #  observation_persistence: 0.0, marking: true, clearing: true, max_obstacle_height: 0.4, min_obstacle_height: 0.08}
+

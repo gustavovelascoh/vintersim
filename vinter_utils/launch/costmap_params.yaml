@@ -1,0 +1,43 @@
+global_frame: "/map"
+robot_base_frame: "/intersection_0"
+update_frequency: 5.0
+publish_frequency: 5.0
+obstacle_range: 10
+raytrace_range: 15
+  
+inflation_radius: 0.05
+robot_radius: 0.03 
+  
+observation_sources: "base_0 base_1 base_2 base_3"
+  
+#North East Base laser
+base_0:
+  topic: "/base_0/base_scan"
+  data_type: "LaserScan"
+  observation_persistence: 0.0
+  clearing: true
+  
+#South East Base laser
+base_1:
+  topic: "/base_1/base_scan"
+  data_type: "LaserScan"
+  observation_persistence: 0.0
+  clearing: true
+ 
+#South West Base laser
+base_2:
+  topic: "/base_2/base_scan"
+  data_type: "LaserScan"
+  observation_persistence: 0.0
+  clearing: true
+
+#North West Base laser
+base_3:
+  topic: "/base_3/base_scan"
+  data_type: "LaserScan"
+  observation_persistence: 0.0
+  clearing: true
+  
+static_map: true
+publish_voxel_map: true
+track_unknown_space: true

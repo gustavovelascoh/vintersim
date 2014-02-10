@@ -1,0 +1,29 @@
+# Parameters for testing rolling window map
+global_frame: /map
+robot_base_frame: "/car_0/base_link"
+#robot_base_frame: "/intersection_0"
+update_frequency: 5.0
+publish_frequency: 5.0
+obstacle_range: 10
+raytrace_range: 15
+  
+inflation_radius: 0.35
+robot_radius: 0.3 
+  
+observation_sources: "base_scan"
+  
+#base_scan parameters
+base_scan:
+  topic: "/car_0/base_scan"
+  sensor_frame: "/car_0/base_laser_link"
+  data_type: "LaserScan"
+  observation_persistence: 0.0
+  clearing: true
+
+  
+static_map: false
+rolling_window: true
+publish_voxel_map: true
+
+#map_type: static
+#track_unknown_space: true
